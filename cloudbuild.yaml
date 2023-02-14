@@ -21,24 +21,14 @@ steps:
 #  entrypoint: bash
 #  args: ['dags/tests/dag_parsing_test.sh', '${_COMPOSER_ENVIRONMENT}', '${_COMPOSER_REGION}']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  id: List Dags
-  entrypoint: bash
-  args:
-  - '-c'
-  - |-
-    gcloud composer environments run my-environment --quiet --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/ > output.txt
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Check DAG Parsing Errors
   entrypoint: bash
   args:
   - '-c'
   - |-
-    while read line; do
-      echo $line
-      if grep -q "Error" <<< "$line"; then
-          echo $line
-      fi
-    done < output.txt
+    if grep -q "Error" <<< $(gcloud composer environments run my-environment --quiet --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/); then
+      echo "Error"
+    fi
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
