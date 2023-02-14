@@ -3,6 +3,7 @@
 environment=$1
 location=$2
 ERROR_STR="Error"
+exit 1
 output=$(gcloud composer environments run ${environment} --location ${location} dags list -- --subdir /home/airflow/gcs/data/test/)
 
 if [[ "$output" =~ "$ERROR_STR".* ]]; then 
