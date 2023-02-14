@@ -11,7 +11,7 @@ steps:
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Check DAG Parsing Errors
   entrypoint: bash
-  args: [-c, 'python dags/tests/dag_parsing_test.py']
+  args: [-c, 'python3 dags/tests/dag_parsing_test.py']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
