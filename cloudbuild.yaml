@@ -8,27 +8,10 @@ steps:
   id: Deploy To Test
   entrypoint: bash
   args: [ '-c', 'gsutil -m rsync -d -r ./dags gs://${_COMPOSER_BUCKET}/data/test']
-#- name: gcr.io/cloud-builders/gcloud
-#  id: Test DAGs
-#  entrypoint: gcloud
-#  args: ['composer environments', 'run', 'my-environment', '--location', 'us-central1', 'dags list', '--', '--subdir', '/home/airflow/gcs/data/test']
-#- name: gcr.io/google.com/cloudsdktool/cloud-sdk
-#  id: Test DAGs
-#  entrypoint: bash
-#  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/']
-#- name: gcr.io/cloud-builders/gcloud
-#  id: Check DAG Parsing Errors
-#  entrypoint: bash
-#  args: ['dags/tests/dag_parsing_test.sh', '${_COMPOSER_ENVIRONMENT}', '${_COMPOSER_REGION}']
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+- name: 'docker.io/library/python:3.8'
   id: Check DAG Parsing Errors
   entrypoint: bash
-  args:
-  - '-c'
-  - |-
-    if grep -q "Error" <<< $(gcloud composer environments run my-environment --quiet --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/); then
-      echo "Error"
-    fi
+  args: [-c, 'python dags/tests/dag_parsing_test.py']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
