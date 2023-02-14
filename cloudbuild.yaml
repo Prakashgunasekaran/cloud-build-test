@@ -12,13 +12,18 @@ steps:
 #  id: Test DAGs
 #  entrypoint: gcloud
 #  args: ['composer environments', 'run', 'my-environment', '--location', 'us-central1', 'dags list', '--', '--subdir', '/home/airflow/gcs/data/test']
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  id: Test DAGs
-  entrypoint: bash
-  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/']
+#- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+#  id: Test DAGs
+#  entrypoint: bash
+#  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/']
+- name: 'bash'
+  id: Check DAG Parsing Errors
+  args: ['dags/tests/dag_parsing_test.sh', '${_COMPOSER_ENVIRONMENT}', '${_COMPOSER_REGION}']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
   args: [ '-c', 'gsutil -m rsync -d -r ./dags gs://${_COMPOSER_BUCKET}/dags']
 substitutions:
     _COMPOSER_BUCKET: us-central1-my-environment-53f4281a-bucket
+    _COMPOSER_ENVIRONMENT: my-environment
+    _COMPOSER_REGION: us-central1
