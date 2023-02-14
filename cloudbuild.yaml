@@ -16,9 +16,10 @@ steps:
 #  id: Test DAGs
 #  entrypoint: bash
 #  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/']
-- name: 'bash'
+- name: gcr.io/cloud-builders/gcloud
   id: Check DAG Parsing Errors
-  args: ['sh dags/tests/dag_parsing_test.sh', '${_COMPOSER_ENVIRONMENT}', '${_COMPOSER_REGION}']
+  entrypoint: bash
+  args: ['dags/tests/dag_parsing_test.sh', '${_COMPOSER_ENVIRONMENT}', '${_COMPOSER_REGION}']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
