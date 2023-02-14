@@ -1,7 +1,7 @@
 # first_dag.py test
 import datetime
 
-from airflow import DAG
+from airflow import DAGG
 from airflow.operators.python_operator import PythonOperator
 
 from python_scripts import first_script
