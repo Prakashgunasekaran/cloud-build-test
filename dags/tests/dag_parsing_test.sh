@@ -8,5 +8,5 @@ output=$(gcloud composer environments run ${environment} --location ${location} 
 if [[ "$output" =~ "$ERROR_STR".* ]]; then 
 
 	gcloud composer environments run ${environment} --location ${location} dags list-import-errors -- --subdir /home/airflow/gcs/data/test/
-	echo 1
+	exit 1
 fi
