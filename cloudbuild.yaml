@@ -26,10 +26,10 @@ steps:
   args:
   - '-c'
   - |-
-    gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/ > output.txt
+    gcloud composer environments run my-environment --quiet --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/ > output.txt
     while read line; do
       if grep -q "Error" <<< "$line"; then
-          gcloud composer environments run my-environment --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/
+          gcloud composer environments run my-environment --quiet --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/
           exit 1
       fi
     done < output.txt
