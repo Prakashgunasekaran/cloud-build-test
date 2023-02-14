@@ -3,7 +3,7 @@
 import unittest
 import sys
 sys.path.append("..")
-from python_scripts import first_script
+from ..python_scripts import first_script
 
 class TestScripts(unittest.TestCase):
 
