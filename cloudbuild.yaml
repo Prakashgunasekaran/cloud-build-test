@@ -30,7 +30,7 @@ steps:
   args:
   - '-c'
   - |-
-    gcloud composer environments run my-environment --quiet --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/ > output.txt
+    gcloud composer environments run my-environment --quiet --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/ > output.txt
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Check DAG Parsing Errors
   entrypoint: bash
@@ -39,8 +39,8 @@ steps:
   - |-
     while read line; do
       echo $line
-      if grep -q "Error" <<< "$line"; then
-          echo $line
+      if grep -q "error" <<< "$line"; then
+          exit 1
       fi
     done < output.txt
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
