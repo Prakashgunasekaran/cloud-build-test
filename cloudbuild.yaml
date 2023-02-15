@@ -30,7 +30,7 @@ steps:
   args:
   - '-c'
   - |-
-    gcloud composer environments run my-environment --quiet --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/ > output.txt
+    gcloud composer environments run ${_COMPOSER_ENVIRONMENT} --quiet --location ${_COMPOSER_REGION} dags list-import-errors -- --subdir /home/airflow/gcs/data/test/ > output.txt
     exit_status=0
     while read line; do
       echo $line
