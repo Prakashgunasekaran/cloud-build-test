@@ -15,7 +15,7 @@ steps:
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Check DAG Parsing Errors
   entrypoint: bash
-  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/']
+  args: [ '-c', 'gcloud composer environments run my-environment --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/']
 #- name: gcr.io/cloud-builders/gcloud
 #  id: Check DAG Parsing Errors
 #  entrypoint: bash
