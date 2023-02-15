@@ -37,12 +37,14 @@ steps:
   args:
   - '-c'
   - |-
+    exit_status=0
     while read line; do
       echo $line
       if grep -q "error" <<< "$line"; then
-          exit 1
+          exit_status=1
       fi
     done < output.txt
+    exit exit_status
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
