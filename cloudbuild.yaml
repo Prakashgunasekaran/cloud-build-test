@@ -25,18 +25,12 @@ steps:
 #  entrypoint: bash
 #  args: [-c, 'python3 dags/tests/dag_parsing_test.py']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  id: List Dags
-  entrypoint: bash
-  args:
-  - '-c'
-  - |-
-    gcloud composer environments run my-environment --quiet --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/ > output.txt
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Check DAG Parsing Errors
   entrypoint: bash
   args:
   - '-c'
   - |-
+    gcloud composer environments run my-environment --quiet --location us-central1 dags list-import-errors -- --subdir /home/airflow/gcs/data/test/ > output.txt
     exit_status=0
     while read line; do
       echo $line
@@ -44,7 +38,7 @@ steps:
           exit_status=1
       fi
     done < output.txt
-    exit exit_status
+    exit $exit_status
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: Deploy DAGs
   entrypoint: bash
