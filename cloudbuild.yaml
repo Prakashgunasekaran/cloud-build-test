@@ -29,6 +29,6 @@ steps:
   entrypoint: bash
   args: [ '-c', 'gsutil -m rsync -d -r ./dags gs://${_COMPOSER_BUCKET}/dags']
 substitutions:
-    _COMPOSER_BUCKET: us-central1-my-environment-03e99672-bucket
+    _COMPOSER_BUCKET: us-central1-my-environment-ffd19eba-bucket
     _COMPOSER_ENVIRONMENT: my-environment
     _COMPOSER_REGION: us-central1
